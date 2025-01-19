@@ -1,15 +1,27 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const output = "../webpack/dist"
+const pages = {
+  main: "index"
+}
+
+const entries = {}
+const plugins = []
+
+for(const key in pages) {
+  entries[key] = `./src/${pages[key]}.js`
+  plugins.push(new HtmlWebpackPlugin({
+    title: key,
+    template: `./src/${pages[key]}.html`,
+    chunks: [key]
+  }))
+}
+
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Template',
-      template: './src/index.html',
-    }),
-  ],
+  entry: entries,
+  plugins: plugins,
   devServer: {
     static: './dist',
   },
@@ -26,7 +38,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name]/index.js',
+    path: path.resolve(__dirname, output),
   },
 };
