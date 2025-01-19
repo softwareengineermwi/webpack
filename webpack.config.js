@@ -19,6 +19,7 @@ for(const key in pages) {
 }
 
 module.exports = {
+  devtool: 'source-map',
   mode: 'development',
   entry: entries,
   plugins: plugins,
@@ -40,5 +41,8 @@ module.exports = {
   output: {
     filename: '[name]/index.js',
     path: path.resolve(__dirname, output),
+  },
+  experiments: {
+    topLevelAwait: true
   },
 };
